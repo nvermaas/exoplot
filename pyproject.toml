@@ -39,4 +39,3 @@ exoplot = "exoplot.main:main"
 [tool.setuptools]
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 packages=["exoplot","exoplot.astrometry", "exoplot.database", "exoplot.imaging", "exoplot.services"]
-lot", "exoplot.astrometry", "exoplot.database", "exoplot.imaging", "exoplot.services"]
