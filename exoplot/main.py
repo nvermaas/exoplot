@@ -38,11 +38,11 @@ def main():
                         default="http://nova.astrometry.net",
                         help="astrometry_api_key")
     parser.add_argument("--astrometry_api_key",
-                        default="",
+                        default=None,
                         help="astrometry_api_key")
     parser.add_argument("--source",
-                        default="raw",
-                        help="draw on which image? raw, annotated")
+                        default="annotated",
+                        help="draw on which image? 'raw', 'annotated'")
     parser.add_argument("--submission_id",
                         default=None,
                         help="if the submission_id is known then now new job is submitted, but instead the existing job is checked for results.")
@@ -53,16 +53,12 @@ def main():
                         default=20,
                         help="circle size")
     parser.add_argument("--path_to_image",
-                        default="input_image.jpg",
+                        default="../examples/input_image.jpg",
                         help="filename of the input image")
     parser.add_argument("--output_dir",
-                        default="outputs",
+                        default="../outputs",
                         help="directory where the output results will be stored")
 
-    parser.add_argument("-e", "--draw_exoplanets",
-                        default=False,
-                        help="draw exoplanets on the image",
-                        action="store_true")
     # All parameters in a file
     parser.add_argument('--argfile',
                         nargs='?',
@@ -71,7 +67,13 @@ def main():
 
     args = get_arguments(parser)
 
-    print(f"--- exopipe 18 jul 2023 ---")
+    print(f"--- ExoPlot - 19 jul 2023 ---")
+
+
+    # check for an apikey
+    if not args.astrometry_api_key:
+        print("An astrometry api_key is required to use this application. See https://nova.astrometry.net/api_help")
+        exit(-1)
 
     # submit the image to astrometry.net
     submission_id = do_submit(args)
