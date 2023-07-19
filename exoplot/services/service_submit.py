@@ -136,7 +136,7 @@ def do_check_submission_status(submission_id, args):
         if job_status != "success":
             # not successful yet, wait for 5 seconds
             print(f"job_status: {job_status}, sleep for 5 seconds...")
-            time.sleep(5000)
+            time.sleep(5)
 
 # --- Main Service -----------------------------------------------------------------------------------------------
 

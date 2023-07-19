@@ -1,6 +1,10 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "exoplot"
-version = "0.1.1"
+version = "0.1.8"
 description = "Exoplot is a pip installable runnable package that can be used to draw exoplanets on a astrophotographs."
 readme = "README.md"
 license = {text = "GNU General Public License v3.0" }
@@ -22,8 +26,8 @@ requires-python = ">=3.10"
 dependencies = [
     'requests',
     'astropy',
-    'Pillow',
-    'astroquery',
+    'Pillow==10.0.0',
+    'astroquery==0.4.6',
 ]
 
 [project.urls]
@@ -34,5 +38,5 @@ exoplot = "exoplot.main:main"
 
 [tool.setuptools]
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
-packages=["exoplot"]
-
+packages=["exoplot","exoplot.astrometry", "exoplot.database", "exoplot.imaging", "exoplot.services"]
+lot", "exoplot.astrometry", "exoplot.database", "exoplot.imaging", "exoplot.services"]

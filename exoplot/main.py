@@ -1,9 +1,11 @@
 import os, sys, argparse
 import json
-from services.service_submit import do_submit
-from services.service_processor import do_processor
-from imaging.fits_imaging import draw_grid, draw_extra, get_min_max_ra_dec
-from database.exoplanets import load_payload_from_database
+
+#todo: na packaging denkt hij dat de packages exoplot.services heten, in plaats van services
+from exoplot.services.service_submit import do_submit
+from exoplot.services.service_processor import do_processor
+from exoplot.imaging.fits_imaging import draw_grid, draw_extra, get_min_max_ra_dec
+from exoplot.database.exoplanets import load_payload_from_database
 
 def main():
     def get_arguments(parser):
