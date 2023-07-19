@@ -133,7 +133,6 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
 
         constellation = coord.get_constellation()
 
-        print('open('+path_to_input_image_file+')')
         try:
             im = Image.open(path_to_input_image_file)
         except:
@@ -141,13 +140,11 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
             print(error)
             raise (Exception(error))
 
-        print('opened')
         im_new = im.copy()
         draw = ImageDraw.Draw(im_new)
 
         # scale the font based on the image size
         scale = int(width/ 60)
-        print('load fonts')
         try:
             font_title = ImageFont.truetype("arial.ttf", scale * 2, encoding="unic")
             font_subtitle = ImageFont.truetype("arial.ttf", scale, encoding="unic")
@@ -235,7 +232,7 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
 
         print("path_to_new_file = " + path_to_new_file)
         im_new.save(path_to_new_file)
-        print("saved")
+
         #im_new.show()
 
         return path_to_new_file, ra_start,ra_end,dec_start,dec_end, fov
@@ -306,7 +303,6 @@ def get_simbad(ra, dec):
                 main_id = row[0].decode(encoding='UTF-8')
             except:
                 main_id = row[0]
-            print(main_id)
 
             customSimbad = Simbad()
             customSimbad.add_votable_fields('fluxdata(V)')
@@ -316,7 +312,6 @@ def get_simbad(ra, dec):
                 r = row[0]
                 try:
                     flux = round(row[0],1)
-                    print(flux)
                     if flux < min_flux:
                         min_flux = flux
                 except:
@@ -357,7 +352,6 @@ def get_stars(path_to_fits, astrometry_job):
     data = hdul[1].data
 
     # open image file with PIL
-    print('open(' + path_to_image_file + ')')
     im = Image.open(path_to_image_file)
     im_new = im.copy()
 

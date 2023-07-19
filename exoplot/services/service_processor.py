@@ -93,7 +93,7 @@ def do_handle_processed_jobs(submission_id, args):
         #add_dataproduct(job_id,"/extraction_image_full/", "_extraction.jpg", "extraction")
         #add_dataproduct(job_id,"/rdls_file/", "_rdls_file.fits", "nearby_stars_fits")
         #add_dataproduct(job_id,"/wcs_file/", "_wcs_file.fits", "wcs_fits")
-        #add_dataproduct(job_id,"/axy_file/", "_axy_file.fits", "stars_fits")
+        add_dataproduct(job_id,"/axy_file/", "_axy_file.fits", "stars_fits")
         #add_dataproduct(job_id, "/corr_file/", "_corr_file.fits", "corr_fits")
 
         return job_id

@@ -33,19 +33,18 @@ def main():
 
     parser = argparse.ArgumentParser(fromfile_prefix_chars='@')
 
-
-    parser.add_argument("--astrometry_url",
-                        default="http://nova.astrometry.net",
-                        help="astrometry_api_key")
     parser.add_argument("--astrometry_api_key",
                         default=None,
-                        help="astrometry_api_key")
+                        help="the api_key that you requested at https://nova.astrometry.net/api_help")
+    parser.add_argument("--astrometry_url",
+                        default="http://nova.astrometry.net",
+                        help="default http://nova.astrometry.net")
     parser.add_argument("--source",
                         default="annotated",
-                        help="draw on which image? 'raw', 'annotated'")
+                        help="Which type of image do you want to draw exoplanets on? Options are: 'raw', 'annotated', 'grid'")
     parser.add_argument("--submission_id",
                         default=None,
-                        help="if the submission_id is known then now new job is submitted, but instead the existing job is checked for results.")
+                        help="if the submission_id is known then no new job is submitted, but instead the existing job is checked for results. Useful for playing with the other parameters while keeping the existing plate solving results.")
     parser.add_argument("--title",
                         default="my title",
                         help="enter your own title for on the output image")
@@ -54,7 +53,7 @@ def main():
                         help="circle size")
     parser.add_argument("--path_to_image",
                         default="../examples/input_image.jpg",
-                        help="filename of the input image")
+                        help="filename of the input image, if not filled in it will use the example image provided")
     parser.add_argument("--output_dir",
                         default="../outputs",
                         help="directory where the output results will be stored")
