@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Exoplot"
+description = "Exoplot is a pip installable runnable package that can be used to draw exoplanets on a astrophotograph."
+readme = "README.md"
+license = {text = "Apache License 2.0" }
+
+# Check https://pypi.org/classifiers/ for applicable classifiers
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
+requires-python = ">=3.10"
+dependencies = [
+    'requests >= 2.20.0, < 3.0',
+    'astropy >= 4.0',
+    'Pillow >= 8.3.2; python_version < "3.8"',
+]
+dynamic = ["version"]
+
+[project.urls]
+Source = "https://github.com/nvermaas/exoplot"
+
+[project.scripts]
+exoplot = "exoplot.main:main"
+
+[tool.setuptools]
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+packages=["exoplot"]
+
+[tool.setuptools_scm]
+# Also see: https://github.com/pypa/setuptools_scm#default-versioning-scheme
+write_to = "exoplot/_version.py"
