@@ -2,6 +2,9 @@ import sqlite3
 
 def load_payload_from_database(ra_start,ra_end,dec_start,dec_end, args):
     payload = []
+    # todo: load the database from within the distribution
+    # alternatively... use --database argument and load it from outside the package (makes it easier to update)
+    # https://stackoverflow.com/questions/25270817/loading-sqlite-database-in-python-distribution
     dbname = "exoplanets.sqlite3"
 
     conn = sqlite3.connect(dbname)
