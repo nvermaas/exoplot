@@ -1,6 +1,6 @@
 [project]
 name = "exoplot"
-version = "0.1.0"
+version = "0.1.1"
 description = "Exoplot is a pip installable runnable package that can be used to draw exoplanets on a astrophotographs."
 readme = "README.md"
 license = {text = "GNU General Public License v3.0" }
@@ -20,10 +20,10 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    'requests >= 2.20.0, < 2.30.0',
-    'astropy >= 4.0',
-    'Pillow >= 8.3.2',
-    'astroquery>=0.4.1',
+    'requests',
+    'astropy',
+    'Pillow',
+    'astroquery',
 ]
 
 [project.urls]
