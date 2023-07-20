@@ -1,12 +1,15 @@
 import sqlite3
+import pkgutil
+import pkg_resources
 
 def load_payload_from_database(ra_start,ra_end,dec_start,dec_end, args):
     payload = []
-    # todo: load the database from within the distribution
-    # alternatively... use --database argument and load it from outside the package (makes it easier to update)
-    # https://stackoverflow.com/questions/25270817/loading-sqlite-database-in-python-distribution
-    dbname = "exoplanets.sqlite3"
+    dbname = pkg_resources.resource_filename('exoplot', 'exoplanets.sqlite3')
 
+    # override default database with path given in argument
+    if args.exoplanets_db:
+        dbname = args.exoplanets_db
+    print(dbname)
     conn = sqlite3.connect(dbname)
     query = f"SELECT ra, dec, hostname, sy_pnum FROM exoplanets WHERE ra>{ra_start}-5 AND ra<{ra_end}+5 " \
             f"AND dec>{dec_start}-5 AND dec<{dec_end}+5"

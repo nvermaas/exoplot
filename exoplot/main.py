@@ -41,6 +41,9 @@ def main():
     parser.add_argument("--astrometry_url",
                         default="http://nova.astrometry.net",
                         help="default http://nova.astrometry.net")
+    parser.add_argument("--exoplanets_db",
+                        default=None,
+                        help="path to exoplanets database. If not given it will the default database inside the exoplanet package")
     parser.add_argument("--source",
                         default="annotated",
                         help="Which type of image do you want to draw exoplanets on? Options are: 'raw', 'annotated', 'grid'")
