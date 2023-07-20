@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "exoplot"
-version = "0.1.13"
+version = "0.1.14"
 description = "Exoplot is a pip installable runnable package that can be used to draw exoplanets on a astrophotographs."
 readme = "README.md"
 license = {text = "GNU General Public License v3.0" }
@@ -40,5 +40,5 @@ exoplot = "exoplot.main:main"
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 packages=["exoplot","exoplot.astrometry", "exoplot.database", "exoplot.imaging", "exoplot.services"]
 
-#[tool.setuptools.package-data]
-#exoplot = ["*.sqlite"]
+[tool.setuptools.package-data]
+exoplot = ["*.tff"]

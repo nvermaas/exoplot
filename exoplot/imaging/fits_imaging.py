@@ -1,6 +1,7 @@
 import os
 import math
 import json
+
 from astropy.io import fits
 from astropy.wcs import WCS
 from astropy.coordinates import SkyCoord, get_constellation
@@ -9,6 +10,10 @@ from astroquery.simbad import Simbad
 
 import astropy.units as u
 from PIL import Image, ImageDraw, ImageFont
+
+import pkg_resources
+font_name = pkg_resources.resource_filename('exoplot.imaging', 'arial.ttf')
+
 
 def get_world_coordinate_system(path_to_fits_file):
 
@@ -74,12 +79,12 @@ def draw_degree_grid(wcs, draw, scale, ra, dec, ra_labels, dec_labels, step, fra
     if dec == round(dec_labels):
         a = Angle(ra, u.deg)
         ra_string = a.to_string(unit=u.hour)
-        font = ImageFont.truetype("arial.ttf", int(scale/2), encoding="unic")
+        font = ImageFont.truetype(font_name, int(scale/2), encoding="unic")
         draw.text((x1, (y1+y3)/2), str(ra_string), (255, 255, 0),font=font)
 
     if ra == round(ra_labels):
         dec_string = str(dec)+'deg'
-        font = ImageFont.truetype("arial.ttf", int(scale/2), encoding="unic")
+        font = ImageFont.truetype(font_name, int(scale/2), encoding="unic")
         draw.text((x1+10, y1), dec_string, (255, 255, 0),font=font)
 
 
@@ -104,12 +109,12 @@ def draw_minutes_grid(wcs, draw, scale, ra, dec, ra_labels, dec_labels, step, fr
     if dec == round(dec_labels):
         a = Angle(ra, u.deg)
         ra_string = a.to_string(unit=u.hour)
-        font = ImageFont.truetype("arial.ttf", int(scale/2), encoding="unic")
+        font = ImageFont.truetype(font_name, int(scale/2), encoding="unic")
         draw.text((x1, (y1+y3)/2), str(ra_string), (255, 255, 0),font=font)
 
     if ra == round(ra_labels):
         dec_string = str(dec)+'deg'
-        font = ImageFont.truetype("arial.ttf", int(scale/2), encoding="unic")
+        font = ImageFont.truetype(font_name, int(scale/2), encoding="unic")
         draw.text((x1+10, y1), dec_string, (255, 255, 0),font=font)
 
 
@@ -145,12 +150,8 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
 
         # scale the font based on the image size
         scale = int(width/ 60)
-        try:
-            font_title = ImageFont.truetype("arial.ttf", scale * 2, encoding="unic")
-            font_subtitle = ImageFont.truetype("arial.ttf", scale, encoding="unic")
-        except:
-            font_title = ImageFont.truetype("data/arial.ttf", scale * 2, encoding="unic")
-            font_subtitle = ImageFont.truetype("data/arial.ttf", scale, encoding="unic")
+        font_title = ImageFont.truetype(font_name, scale * 2, encoding="unic")
+        font_subtitle = ImageFont.truetype(font_name, scale, encoding="unic")
 
         text_start_x = scale * 2
         text_start_y = scale * 2
@@ -279,7 +280,7 @@ def draw_star_pixels(draw, x, y, size=20, width=4, fill='yellow'):
 
 
 def draw_magnitude(draw, x, y, scale, magnitude, size=20, width=4, fill='yellow'):
-    font_title = ImageFont.truetype("arial.ttf", scale, encoding="unic")
+    font_title = ImageFont.truetype(font_name, scale, encoding="unic")
     draw.text((x, y), str(magnitude),fill=fill,font=font_title)
 
 
@@ -399,8 +400,8 @@ def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image
         im_new = im.copy()
         draw = ImageDraw.Draw(im_new, 'RGBA')
 
-        font_title = ImageFont.truetype("arial.ttf", 50, encoding="unic")
-        font_ticks = ImageFont.truetype("arial.ttf", 25, encoding="unic")
+        font_title = ImageFont.truetype(font_name, 50, encoding="unic")
+        font_ticks = ImageFont.truetype(font_name, 25, encoding="unic")
 
         list_of_symbols = json.loads(extra)
         for symbol in list_of_symbols:
