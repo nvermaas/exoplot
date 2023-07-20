@@ -12,8 +12,7 @@ import astropy.units as u
 from PIL import Image, ImageDraw, ImageFont
 
 import pkg_resources
-font_name = pkg_resources.resource_filename('exoplot.imaging', 'arial.ttf')
-
+font_name = pkg_resources.resource_filename('exoplot', 'arial.ttf')
 
 def get_world_coordinate_system(path_to_fits_file):
 
