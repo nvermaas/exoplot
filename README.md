@@ -17,7 +17,7 @@ This is a commandline tool in Python does the following:
 > virtualenv env
 > source env/bin/activate
 > pip install astropy Pillow
-> pip install -i https://test.pypi.org/simple/ exoplot
+> pip install exoplot --upgrade
 ```
 
 ### Usage

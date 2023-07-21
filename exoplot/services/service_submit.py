@@ -1,12 +1,6 @@
-"""
-    File name: service_submet.py
-    Author: Nico Vermaas
-    Date created: 2023-07-16
-    Description: - submit job to astrometry.net
-"""
+
 import time
 from exoplot.astrometry.astrometry_client import Client
-
 
 def get_job_id(submission_id, args):
 
@@ -72,7 +66,7 @@ def get_job_results(job_id, args, justdict):
     :param job_id:
     :return:
     """
-    # astrobaseIO.report("---- get_job_results(" + str(job_id) + ")", "print")
+
     # login to astrometry with the API_KEY
     client = Client(apiurl=args.astrometry_url+"/api/")
     client.login(apikey=args.astrometry_api_key)
@@ -99,11 +93,6 @@ def get_submission(submission_id, args):
 def do_submit_jobs(args):
 
     def submit_job_to_astrometry(path_to_image):
-        """
-        http://astrometry.net/doc/net/api.html
-        :param path_to_file:
-        :return:
-        """
 
         # login to astrometry with the API_KEY
         client = Client(apiurl=args.astrometry_url+"/api/")

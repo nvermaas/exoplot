@@ -1,14 +1,5 @@
-"""
-    File name: service_do_data_monitor.py
-    Author: Nico Vermaas
-    Date created: 2019-10-14
-    Description: - checks for new images in a given directory (_locallanding_pad)
-                 - new images are then added as observation and dataproduct to the astrobase backend
-"""
-
 
 import os
-import platform
 import urllib.request
 
 from .service_submit import get_submission, get_job_id

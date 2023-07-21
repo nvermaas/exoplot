@@ -71,7 +71,7 @@ def main():
 
     args = get_arguments(parser)
 
-    print(f"--- ExoPlot - 21 jul 2023 ---")
+    print(f"--- exoplot - 21 jul 2023 ---")
 
     # check for an apikey
     if not args.astrometry_api_key:
