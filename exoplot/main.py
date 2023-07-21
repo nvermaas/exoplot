@@ -40,27 +40,27 @@ def main():
                         help="the api_key that you requested at https://nova.astrometry.net/api_help")
     parser.add_argument("--astrometry_url",
                         default="http://nova.astrometry.net",
-                        help="default http://nova.astrometry.net")
+                        help="astrometry instance for plate solving. If not provided http://nova.astrometry.net will be used")
     parser.add_argument("--exoplanets_db",
                         default=None,
-                        help="path to exoplanets database. If not given it will the default database inside the exoplanet package")
+                        help="path to exoplanets sqlite3 database. If not provided the onboard (july 2023) database will be used")
     parser.add_argument("--source",
                         default="annotated",
-                        help="Which type of image do you want to draw exoplanets on? Options are: 'raw', 'annotated', 'grid'")
+                        help="Background image to draw exoplanets on? Options are: 'raw', 'annotated', 'grid'")
     parser.add_argument("--submission_id",
                         default=None,
                         help="if the submission_id is known then no new job is submitted, but instead the existing job is checked for results. Useful for playing with the other parameters while keeping the existing plate solving results.")
     parser.add_argument("--title",
                         default="my title",
-                        help="enter your own title for on the output image")
+                        help="display your title on the output image")
     parser.add_argument("--size",
                         default=20,
-                        help="circle size")
+                        help="circle size in pixels")
     parser.add_argument("--path_to_image",
                         default=None,
-                        help="filename of the input image, if not filled in it will use the example image provided")
+                        help="input image, if not provided the onboard example image will be used")
     parser.add_argument("--output_dir",
-                        default="../outputs",
+                        default="outputs",
                         help="directory where the output results will be stored")
 
     # All parameters in a file
