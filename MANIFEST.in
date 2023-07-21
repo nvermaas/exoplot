@@ -2,3 +2,4 @@ include README.md
 include exoplot/exoplanets.sqlite3
 include exoplot/arial.tff
 include exoplot/imaging/arial.tff
+include examples/input_image.jpg
