@@ -1,9 +1,9 @@
 # exoplot
 
-Plotting exoplanets on your astronomy image (jpg or png).
-This is a commandline tool in Python that does 2 things:
-* plate solving: it uploads your image to http://nova.astrometry.net and downloads the results. 
-* plotting: it plots the contents of an exoplanet database on a copy of your image.
+Plotting exoplanets on your astronomy image .
+This is a commandline tool in Python does the following:
+* plate solving by uploading your image to http://nova.astrometry.net and downloads the results. 
+* plotting all confirmed exoplanets (as of july 2023) on a copy of your image.
 
 **Important!** you need to request an api_key for the plate solving functionality: https://nova.astrometry.net/api_help
 
@@ -71,13 +71,15 @@ If not provided, it will use an example image of Lyra
 #### --output_dir
 The directory where the results of the plate solving and image drawing are stored.
 All files start with a job_id. The following files will be there after a run.
+(note: for size considerations, the following images are partial screenshots)
+
 * <job_id>.fits : the original input image converted to fits
 * <job_id>_annotated.jpg : constellation lines, stars and dso names, downloaded from astrometry.net
 ![](/docs/annotated.jpg)
 * <job_id>_grid.jpg : the previous annotated image, but with a coordinate grid drawn (by the exoplot tool) 
 ![](/docs/grid.jpg)
 * <job_id>_sky_globe.jpg : a global skymap showing the location of your image 
-![](/docs/jsky_globe.jpg)
+![](/docs/sky_globe.jpg)
 * <job_id>_sky_plot.jpg : a more detailed skymap showing the location of your image
 ![](/docs/sky_plot.jpg)
 * <job_id>_exoplanets.jpg : a copy of your image with all currently known confirmed exoplanets plotted.
