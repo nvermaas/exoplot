@@ -73,15 +73,15 @@ The directory where the results of the plate solving and image drawing are store
 All files start with a job_id. The following files will be there after a run.
 * <job_id>.fits : the original input image converted to fits
 * <job_id>_annotated.jpg : constellation lines, stars and dso names, downloaded from astrometry.net
-![](/docs/jobid_annotated.jpg)
+![](/docs/annotated.jpg)
 * <job_id>_grid.jpg : the previous annotated image, but with a coordinate grid drawn (by the exoplot tool) 
-![](/docs/jobid_grid.jpg)
+![](/docs/grid.jpg)
 * <job_id>_sky_globe.jpg : a global skymap showing the location of your image 
-![](/docs/jobid_sky_globe.jpg)
+![](/docs/jsky_globe.jpg)
 * <job_id>_sky_plot.jpg : a more detailed skymap showing the location of your image
-![](/docs/jobid_sky_plot.jpg)
+![](/docs/sky_plot.jpg)
 * <job_id>_exoplanets.jpg : a copy of your image with all currently known confirmed exoplanets plotted.
-![](/docs/jobid_exoplanets.jpg)
+![](/docs/exoplanets.jpg)
 
 #### --source
 You can choose on which image you plot the exoplanets:
