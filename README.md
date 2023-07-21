@@ -1,11 +1,11 @@
 # exoplot
 
-Plotting exoplanets on your astronomy image .
-This is a commandline tool in Python does the following:
+Plotting exoplanets on your astronomy image
 * plate solving by uploading your image to http://nova.astrometry.net and downloads the results. 
 * plotting all confirmed exoplanets (as of july 2023) on a copy of your image.
 
-**Important!** you need to request an api_key for the plate solving functionality: https://nova.astrometry.net/api_help
+**Important!** 
+you need to request an api_key for the plate solving functionality: https://nova.astrometry.net/api_help
 
 ### Resources
 * github (source code): https://github.com/nvermaas/exoplot
@@ -61,7 +61,7 @@ options:
 
 ```
 
-The most important options
+### The most important options
 
 #### --astrometry_api_key
 you need to request an api_key for the plate solving functionality: https://nova.astrometry.net/api_help
