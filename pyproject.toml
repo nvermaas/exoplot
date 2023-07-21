@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "exoplot"
-version = "0.1.21"
+version = "0.1.22"
 description = "Plate solving and plotting exoplanets on your astronomy image."
 readme = "README.md"
 license = {text = "GNU General Public License v3.0" }
@@ -36,6 +36,5 @@ Source = "https://github.com/nvermaas/exoplot"
 exoplot = "exoplot.main:main"
 
 [tool.setuptools]
-# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 packages=["exoplot","exoplot.astrometry", "exoplot.database", "exoplot.imaging", "exoplot.services"]
 
