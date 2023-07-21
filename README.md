@@ -30,7 +30,7 @@ This is a commandline tool in Python that does 2 things:
 
 ### run locally (like in PyCharm)
 * Execute the ```main.py``` file
-* Required parameter: ```--astrometry_api_key <your-api-key>
+* Required parameter: ```--astrometry_api_key <your-api-key>```
 * See the options: `-h`
 
 ### build

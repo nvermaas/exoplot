@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "exoplot"
-version = "0.1.19"
-description = "Exoplot is a pip installable runnable package that can be used to draw exoplanets on a astrophotographs."
+version = "0.1.21"
+description = "Plate solving and plotting exoplanets on your astronomy image."
 readme = "README.md"
 license = {text = "GNU General Public License v3.0" }
 authors = [

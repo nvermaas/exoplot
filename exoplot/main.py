@@ -1,10 +1,10 @@
 import os, sys, argparse
 import json
+import pkg_resources
 
-#todo: na packaging denkt hij dat de packages exoplot.services heten, in plaats van services
 from exoplot.services.service_submit import do_submit
 from exoplot.services.service_processor import do_processor
-from exoplot.imaging.fits_imaging import draw_grid, draw_extra, get_min_max_ra_dec
+from exoplot.imaging.fits_imaging import draw_grid, plot_on_image, get_min_max_ra_dec
 from exoplot.database.exoplanets import load_payload_from_database
 
 def main():
@@ -57,7 +57,7 @@ def main():
                         default=20,
                         help="circle size")
     parser.add_argument("--path_to_image",
-                        default="../examples/input_image.jpg",
+                        default=None,
                         help="filename of the input image, if not filled in it will use the example image provided")
     parser.add_argument("--output_dir",
                         default="../outputs",
@@ -73,11 +73,16 @@ def main():
 
     print(f"--- ExoPlot - 21 jul 2023 ---")
 
-
     # check for an apikey
     if not args.astrometry_api_key:
         print("An astrometry api_key is required to use this application. See https://nova.astrometry.net/api_help")
         exit(-1)
+
+    # if --path_to_image is not given, use the onboard example
+    if not args.path_to_image:
+        path_to_image = pkg_resources.resource_filename('exoplot', 'resources/example_input_image.jpg')
+    else:
+        path_to_image = args.path_to_image
 
     # submit the image to astrometry.net
     submission_id = do_submit(args)
@@ -87,12 +92,12 @@ def main():
 
     # draw exoplanets on the image
     path_to_fits_file = os.path.join(args.output_dir,f"{job_id}.fits")
-    path, file = os.path.split(args.path_to_image)
+    path, file = os.path.split(path_to_image)
     input_filename = os.path.splitext(file)
 
     # create <job>_grid.<ext>
     path_to_output_image = os.path.join(args.output_dir, f"{job_id}_grid{input_filename[1]}")
-    draw_grid(path_to_fits_file, args.path_to_image, path_to_output_image, args.title, "degrees")
+    draw_grid(path_to_fits_file, path_to_image, path_to_output_image, args.title, "degrees")
 
     # on which source file is the drawing done?
     if args.source == "annotated":
@@ -112,7 +117,7 @@ def main():
     payload = load_payload_from_database(ra_start, ra_end, dec_start, dec_end, args)
 
     # draw the payload on the image
-    draw_extra(path_to_fits_file, source_image, path_to_output_image, json.dumps(payload))
+    plot_on_image(path_to_fits_file, source_image, path_to_output_image, json.dumps(payload))
 
 
 if __name__ == '__main__':

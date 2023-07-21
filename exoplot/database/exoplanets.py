@@ -3,7 +3,7 @@ import pkg_resources
 
 def load_payload_from_database(ra_start,ra_end,dec_start,dec_end, args):
     payload = []
-    dbname = pkg_resources.resource_filename('exoplot', 'exoplanets.sqlite3')
+    dbname = pkg_resources.resource_filename('exoplot', 'resources/exoplanets.sqlite3')
 
     # override default database with path given in argument
     if args.exoplanets_db:
@@ -15,7 +15,7 @@ def load_payload_from_database(ra_start,ra_end,dec_start,dec_end, args):
 
     # very expensive to try to plot all the exoplanets, but it saves the complexity of doing a real cone search
     #query = f"SELECT ra, dec, hostname, sy_pnum FROM exoplanets"
-    print(query)
+    #print(query)
 
     cursor = conn.execute(query)
     size1 = int(args.size)

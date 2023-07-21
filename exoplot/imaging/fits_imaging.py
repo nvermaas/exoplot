@@ -11,7 +11,7 @@ import astropy.units as u
 from PIL import Image, ImageDraw, ImageFont
 
 import pkg_resources
-font_name = pkg_resources.resource_filename('exoplot', 'imaging/arial.ttf')
+font_name = pkg_resources.resource_filename('exoplot', 'resources/arial.ttf')
 
 def get_world_coordinate_system(path_to_fits_file):
 
@@ -270,9 +270,8 @@ def get_min_max_ra_dec(path_to_fits_file):
 
 
 
-def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image_file, extra):
+def plot_on_image(path_to_fits_file, path_to_input_image_file, path_to_output_image_file, payload):
     try:
-        print('draw_extra(' + path_to_fits_file + ')')
         wcs, width, height,_,_ = get_world_coordinate_system(path_to_fits_file)
 
         im = Image.open(path_to_input_image_file)
@@ -282,7 +281,7 @@ def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image
         font_title = ImageFont.truetype(font_name, 50, encoding="unic")
         font_ticks = ImageFont.truetype(font_name, 25, encoding="unic")
 
-        list_of_symbols = json.loads(extra)
+        list_of_symbols = json.loads(payload)
         for symbol in list_of_symbols:
             #print(str(symbol))
             ra = symbol['ra']
@@ -322,92 +321,4 @@ def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image
 
     except Exception as error:
         print(str(error))
-
-
-def image_cutout(path_to_fits_file, path_to_input_image_file, path_to_output_image_file, extra):
-
-    print('image_cutout(' + path_to_fits_file + ')')
-
-    try:
-       wcs, width, height, ra_reference, dec_reference = get_world_coordinate_system(path_to_fits_file)
-    except:
-        raise (Exception("ERROR: " + path_to_fits_file + ' not found'))
-
-    try:
-        im = Image.open(path_to_input_image_file)
-    except:
-        raise (Exception("ERROR: " + path_to_input_image_file + ' not found'))
-
-    im_new = im.copy()
-    #draw = ImageDraw.Draw(im_new, 'RGBA')
-    draw = ImageDraw.Draw(im_new)
-    # do the magic
-
-    # the cone information is in the 'extra' parameters
-    extra_parameters = extra.split(',')
-    search_ra = float(extra_parameters[0].strip())
-    search_dec = float(extra_parameters[1].strip())
-    field_of_view = float(extra_parameters[2].strip())
-    title = str(extra_parameters[3])
-    size_in_pixels = int(extra_parameters[4])
-
-    # cut out a square the size of 'field_of_view'
-    ra_left = search_ra + (0.5 * field_of_view)
-    ra_right = search_ra - (0.5 * field_of_view)
-    dec_top = search_dec + (0.5 * field_of_view)
-    dec_bottom = search_dec - (0.5 * field_of_view)
-
-    # get the bounding box and central point in pixels and world coordinates
-    sky0 = SkyCoord(Longitude([search_ra], unit=u.deg), Latitude([search_dec], unit=u.deg), frame='icrs')
-    sky1 = SkyCoord(Longitude([ra_left], unit=u.deg), Latitude([dec_top], unit=u.deg), frame='icrs')
-    sky2 = SkyCoord(Longitude([ra_right], unit=u.deg), Latitude([dec_bottom], unit=u.deg), frame='icrs')
-    x0, y0 = wcs.world_to_pixel(sky0)
-    x1, y1 = wcs.world_to_pixel(sky1)
-    x2, y2 = wcs.world_to_pixel(sky2)
-
-    # calculate radius in pixels using pythagoras
-    dx = x2 - x1
-    dy = y2 - y1
-    d_pixels = math.hypot(dx,dy)
-
-    d_ra = ra_right - ra_left
-    d_dec = dec_top - dec_bottom
-    d_radec = math.hypot(d_ra,d_dec)
-
-    pixels_per_degree = d_pixels / d_radec
-    radius_in_pixels = field_of_view * pixels_per_degree / 2
-
-    # crop the image
-    left = int(x0 - radius_in_pixels)
-    top = int(y0 - radius_in_pixels)
-    right = int(x0 + radius_in_pixels)
-    bottom = int(y0 + radius_in_pixels)
-
-    try:
-        im_new = im_new.crop((left, top, right, bottom))
-    except:
-        raise (Exception("ERROR: crop failed for "+path_to_output_image_file))
-
-    # rotate the image
-    sky1 = SkyCoord(Longitude([search_ra], unit=u.deg), Latitude([search_dec], unit=u.deg), frame='icrs')
-    sky2 = SkyCoord(Longitude([search_ra + 1], unit=u.deg), Latitude([search_dec], unit=u.deg), frame='icrs')
-    x1, y1 = wcs.world_to_pixel(sky1)
-    x2, y2 = wcs.world_to_pixel(sky2)
-
-    dx = x1 - x2
-    dy = y2 - y1
-    rotation = math.degrees(math.atan(dy / dx))
-    im_new = im_new.rotate(-rotation)
-
-    # resize to a common size
-    im_new = im_new.resize((size_in_pixels,size_in_pixels))
-
-    # save result
-    os.makedirs(os.path.dirname(path_to_output_image_file), exist_ok=True)
-    path_to_new_file = path_to_output_image_file
-    im_new.save(path_to_new_file)
-    #im_new.show()
-
-    return path_to_new_file
-
 
