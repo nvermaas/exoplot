@@ -7,19 +7,16 @@ This is a commandline tool in Python does the following:
 
 **Important!** you need to request an api_key for the plate solving functionality: https://nova.astrometry.net/api_help
 
-*disclaimer*:
-I originally used an old version of an astrometry.net client, but I cannot remember where I found it.
-So the following class was not written by me, but by some anonymous hero.
-https://github.com/nvermaas/exoplot/blob/master/exoplot/astrometry/astrometry_client.py
-
 ### Resources
 * github (source code): https://github.com/nvermaas/exoplot
-* pypi (pip installable): https://test.pypi.org/project/exoplot/
+* pypi (pip installable): https://pypi.org/project/exoplot
+
 
 ### Install
 ```
 > virtualenv env
 > source env/bin/activate
+> pip install astropy Pillow
 > pip install -i https://test.pypi.org/simple/ exoplot
 ```
 
@@ -112,7 +109,13 @@ You can choose on which image you plot the exoplanets:
 ### build
 > py -m build
 ### upload to pypi
-> py -m twine upload --repository testpypi dist/*
+> py -m twine upload dist/*
 
 ### deploy
-> pip install -i https://test.pypi.org/simple/ exoplot
+> pip install exoplot --upgrade
+
+
+*disclaimer*:
+I originally used an old version of an astrometry.net client, but I cannot remember where I found it.
+So the following class was not written by me, but by some anonymous hero.
+https://github.com/nvermaas/exoplot/blob/master/exoplot/astrometry/astrometry_client.py
