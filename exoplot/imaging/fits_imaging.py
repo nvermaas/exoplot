@@ -6,13 +6,12 @@ from astropy.io import fits
 from astropy.wcs import WCS
 from astropy.coordinates import SkyCoord, get_constellation
 from astropy.coordinates import Angle, Latitude, Longitude  # Angles
-from astroquery.simbad import Simbad
 
 import astropy.units as u
 from PIL import Image, ImageDraw, ImageFont
 
 import pkg_resources
-font_name = pkg_resources.resource_filename('exoplot', 'arial.ttf')
+font_name = pkg_resources.resource_filename('exoplot', 'imaging/arial.ttf')
 
 def get_world_coordinate_system(path_to_fits_file):
 
@@ -211,7 +210,6 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
                     pass
 
             # save result
-        #path_to_new_file = path_to_image_file.replace(".", "_grid.")
         path_to_new_file = path_to_output_image_file
 
         if grid_type == "equatorial":
@@ -228,7 +226,6 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
 
             # save result
             path_to_new_file = path_to_input_image_file.replace(".", "_grid_eq.")
-            #path_to_new_file = path_to_output_image_file
 
         print("path_to_new_file = " + path_to_new_file)
         im_new.save(path_to_new_file)
@@ -271,123 +268,6 @@ def get_min_max_ra_dec(path_to_fits_file):
     except Exception as error:
         print(str(error))
 
-
-
-def draw_star_pixels(draw, x, y, size=20, width=4, fill='yellow'):
-    draw.line(((x - size, y), (x + size, y)),fill=fill)
-    draw.line(((x, y - size), (x, y + size)),fill=fill)
-
-
-def draw_magnitude(draw, x, y, scale, magnitude, size=20, width=4, fill='yellow'):
-    font_title = ImageFont.truetype(font_name, scale, encoding="unic")
-    draw.text((x, y), str(magnitude),fill=fill,font=font_title)
-
-
-def get_simbad(ra, dec):
-    print('get_simbad(' + str(ra)+','+str(dec)+ ')')
-    # find an object on this ra, dec (in degrees) and retrieve its magnitude
-
-    result = None
-    try:
-        # use astroquery to find and object with Simbad
-        coords = SkyCoord(ra, dec, unit=(u.deg, u.deg), frame='icrs')
-
-        t = Simbad.query_region(coords, radius='0d0m10s')
-
-        # it is possible to find multiple objects on this location,
-        # realistically I should find the brightest one.
-        min_flux = 20
-
-        for row in t.iterrows('MAIN_ID'):
-            try:
-                main_id = row[0].decode(encoding='UTF-8')
-            except:
-                main_id = row[0]
-
-            customSimbad = Simbad()
-            customSimbad.add_votable_fields('fluxdata(V)')
-            t2 = customSimbad.query_object(main_id)
-
-            for row in t2.iterrows('FLUX_V'):
-                r = row[0]
-                try:
-                    flux = round(row[0],1)
-                    if flux < min_flux:
-                        min_flux = flux
-                except:
-                    if min_flux == 20:
-                        return None
-                    else:
-                        return min_flux
-        if min_flux == 20:
-            return None
-        else:
-            return min_flux
-
-    except Exception as error:
-        print(str(error))
-
-    return None
-
-
-def get_stars(path_to_fits, astrometry_job):
-    print('get_stars(' + path_to_fits + ')')
-
-    # determine the filenames
-    fits_filename = astrometry_job+"_axy_file.fits"
-    image_filename = astrometry_job+"_annotated.jpg"
-    wcs_filename = astrometry_job + ".fits"
-
-    path_to_fits_file = os.path.join(path_to_fits, fits_filename)
-    path_to_image_file = os.path.join(path_to_fits, image_filename)
-    path_to_wcs_file = os.path.join(path_to_fits, wcs_filename)
-    path_to_new_file = path_to_image_file.replace(".", "_stars.")
-
-    # open the wcs file with transformation information
-    wcs, width, height,_,_ = get_world_coordinate_system(path_to_wcs_file)
-    scale = int(width / 60)
-
-    # open datafile with pixel locatoins of the stars
-    hdul = fits.open(path_to_fits_file)
-    data = hdul[1].data
-
-    # open image file with PIL
-    im = Image.open(path_to_image_file)
-    im_new = im.copy()
-
-    draw = ImageDraw.Draw(im_new)
-
-    # parse data
-    list = data[:50]
-    # print(list)
-
-    max_magnitude = 0
-    for fits_record in data:
-        x = fits_record.field(0)
-        y = fits_record.field(1)
-
-        # convert pixel to world
-        coord = wcs.pixel_to_world(x, y)
-        ra = (coord.ra.dms.d) + ((coord.ra.dms.m)/60) + ((coord.ra.dms.s)/3600)
-        dec = (coord.dec.signed_dms.sign) * ((coord.dec.signed_dms.d) + ((coord.dec.signed_dms.m)/60) + ((coord.dec.signed_dms.s)/3600))
-
-        # try to retrieve the magnitudes from simbad
-        magnitude = get_simbad(ra, dec)
-        try:
-            if magnitude > max_magnitude:
-                max_magnitude = magnitude
-        except:
-            pass
-
-        if magnitude!=None:
-            # draw_star_pixels(draw, x, y, int(scale / 2), width=int(scale / 5), fill=(255, 255, 0))
-            draw_magnitude(draw, x,y, scale, magnitude)
-
-    # save result
-    print("path_to_new_file = " + path_to_new_file)
-    im_new.save(path_to_new_file)
-    im_new.show()
-    return path_to_new_file, max_magnitude
 
 
 def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image_file, extra):
